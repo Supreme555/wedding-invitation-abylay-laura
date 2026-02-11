@@ -1,36 +1,150 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wedding Invitation - Abylay & Laura
 
-## Getting Started
+Современное веб-приложение для свадебного приглашения, созданное с использованием Next.js 16, TypeScript и Tailwind CSS.
 
-First, run the development server:
+## Возможности
+
+- **Hero Section** - Красивый главный экран с именами и датой
+- **Countdown Timer** - Живой таймер обратного отсчета до дня свадьбы
+- **Event Details** - Информация о времени и месте проведения
+- **Photo Gallery** - Галерея фотографий пары
+- **RSVP Form** - Форма для подтверждения участия гостей
+- **Responsive Design** - Адаптивный дизайн для всех устройств
+- **Smooth Navigation** - Плавная прокрутка между секциями
+
+## Технологический стек
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS 4
+- **Font**: Playfair Display (serif), Inter (sans-serif)
+- **Package Manager**: Yarn
+
+## Начало работы
+
+### Установка зависимостей
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Запуск сервера разработки
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Откройте [http://localhost:3000](http://localhost:3000) в браузере.
 
-## Learn More
+### Сборка для продакшена
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+yarn build
+yarn start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Структура проекта
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+├── app/                      # Next.js App Router
+│   ├── layout.tsx           # Корневой layout с Header
+│   ├── page.tsx             # Главная страница
+│   └── globals.css          # Глобальные стили
+│
+├── src/
+│   ├── components/          # Переиспользуемые компоненты
+│   │   ├── ui/              # UI компоненты (Button, Card)
+│   │   └── layout/          # Header, Footer
+│   │
+│   ├── features/            # Фичи приложения
+│   │   ├── hero/            # Главный экран
+│   │   ├── countdown/       # Таймер
+│   │   ├── details/         # Детали события
+│   │   ├── rsvp/            # Форма RSVP
+│   │   ├── gallery/         # Галерея
+│   │   └── footer/          # Футер
+│   │
+│   ├── hooks/               # React hooks
+│   ├── lib/                 # Утилиты
+│   ├── types/               # TypeScript типы
+│   └── constants/           # Конфигурация
+│
+└── public/                  # Статические файлы
+    └── images/              # Изображения
+```
 
-## Deploy on Vercel
+Подробнее об архитектуре см. [ARCHITECTURE.md](./ARCHITECTURE.md)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Настройка
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Обновление информации о свадьбе
+
+Отредактируйте файл [src/constants/wedding.ts](src/constants/wedding.ts):
+
+```typescript
+export const WEDDING_INFO: WeddingInfo = {
+  brideName: 'Laura',
+  groomName: 'Abylay',
+  weddingDate: new Date('2026-08-15T16:00:00'),
+  venue: {
+    name: 'Название места проведения',
+    address: 'Адрес места проведения',
+    coordinates: {
+      lat: 0, // Широта
+      lng: 0, // Долгота
+    },
+  },
+  time: '16:00',
+};
+```
+
+### Добавление фотографий в галерею
+
+1. Разместите изображения в `public/images/gallery/`
+2. Обновите массив `GALLERY_IMAGES` в [src/features/gallery/Gallery.tsx](src/features/gallery/Gallery.tsx)
+
+### Настройка RSVP формы
+
+Реализуйте отправку формы в [src/features/rsvp/RSVPForm.tsx](src/features/rsvp/RSVPForm.tsx).
+Можно интегрировать с:
+- Backend API
+- Email сервисом (SendGrid, etc.)
+- Google Sheets
+- Любым другим сервисом
+
+## Дальнейшая разработка
+
+- [ ] Добавить реальные фотографии в галерею
+- [ ] Настроить отправку RSVP формы на бэкенд
+- [ ] Добавить анимации (Framer Motion)
+- [ ] Интегрировать карту (Google Maps/Yandex Maps)
+- [ ] Добавить мультиязычность (i18n)
+- [ ] Настроить SEO и Open Graph теги
+- [ ] Добавить музыкальное сопровождение
+- [ ] Создать админ-панель для управления RSVP
+
+## Деплой
+
+### Vercel (рекомендуется)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+
+1. Push код в GitHub
+2. Импортируйте проект в Vercel
+3. Vercel автоматически определит Next.js и настроит сборку
+
+### Другие платформы
+
+Проект можно развернуть на любой платформе, поддерживающей Next.js:
+- Netlify
+- AWS Amplify
+- Railway
+- Render
+
+## Лицензия
+
+MIT
+
+## Контакты
+
+Создано с любовью для Abylay & Laura
