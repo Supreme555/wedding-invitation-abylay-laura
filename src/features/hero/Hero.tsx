@@ -5,9 +5,7 @@ export function Hero() {
     <section
       id="home"
       className="relative min-h-screen flex items-start justify-center pt-[25vh]"
-      style={{
-        scrollSnapAlign: 'start',
-      }}
+      style={{ scrollSnapAlign: 'start' }}
     >
       {/* Фоновое изображение */}
       <div
@@ -18,99 +16,59 @@ export function Hero() {
           backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
         }}
-      >
-        {/* Градиент-оверлей для читаемости */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(255,255,250,0.3) 0%, transparent 40%)',
-          }}
-        />
-      </div>
+      />
 
       {/* Контент */}
-      <div className="relative z-10 container mx-auto pt-10 px-4 flex items-center justify-center">
+      <div className="relative z-10 container mx-auto px-4">
         <div
-          className="text-center space-y-4 md:space-y-6 py-1 md:py-16 px-6 md:px-10 backdrop-blur-sm h-[40vh] w-[300px] flex flex-col items-center justify-center animate-morph"
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.01)',
-          }}
+          className="text-center space-y-4 md:space-y-6 py-8 px-6 h-[40vh] mx-auto flex flex-col items-center justify-center animate-morph"
+          style={{ backgroundColor: 'rgba(255, 255, 255, 0.01)' }}
         >
-          {/* ВМЕСТЕ С СЕМЬЯМИ */}
           <div
             className="animate-fade-in-up"
-            style={{
-              animationDelay: '0.3s',
-              opacity: 0,
-            }}
+            style={{ animationDelay: '0.3s', opacity: 0 }}
           >
             <p
               className="text-xs md:text-sm uppercase tracking-[3px] md:tracking-[4px]"
-              style={{
-                fontFamily: 'var(--font-cormorant)',
-                color: '#6b6b5e',
-              }}
+              style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
             >
               ВМЕСТЕ С СЕМЬЯМИ
             </p>
           </div>
 
-          {/* Имена */}
           <div
             className="animate-fade-in-up space-y-2 md:space-y-3"
-            style={{
-              animationDelay: '0.6s',
-              opacity: 0,
-            }}
+            style={{ animationDelay: '0.6s', opacity: 0 }}
           >
-            {/* Лаура */}
             <h1
               className="text-[38px] leading-tight sm:text-[44px] md:text-[58px] lg:text-[66px]"
-              style={{
-                fontFamily: 'var(--font-great-vibes)',
-                color: '#4a4a3e',
-              }}
+              style={{ fontFamily: 'var(--font-great-vibes)', color: '#4a4a3e' }}
             >
               Абылай
             </h1>
 
-            {/* & */}
             <p
               className="text-[28px] md:text-[40px]"
-              style={{
-                fontFamily: 'var(--font-great-vibes)',
-                color: '#8a8a7a',
-              }}
+              style={{ fontFamily: 'var(--font-great-vibes)', color: '#8a8a7a' }}
             >
               &
             </p>
 
-            {/* Абылай */}
             <h1
               className="text-[38px] leading-tight sm:text-[44px] md:text-[58px] lg:text-[66px]"
-              style={{
-                fontFamily: 'var(--font-great-vibes)',
-                color: '#4a4a3e',
-              }}
+              style={{ fontFamily: 'var(--font-great-vibes)', color: '#4a4a3e' }}
             >
               Лаура
             </h1>
           </div>
 
-          {/* Текст приглашения */}
           <div
             className="animate-fade-in-up pt-4"
-            style={{
-              animationDelay: '0.9s',
-              opacity: 0,
-            }}
+            style={{ animationDelay: '0.9s', opacity: 0 }}
           >
             <p
               className="text-sm md:text-base italic"
-              style={{
-                fontFamily: 'var(--font-cormorant)',
-                color: '#6b6b5e',
-              }}
+              style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
             >
               просят вас разделить
               <br />
@@ -123,9 +81,7 @@ export function Hero() {
       {/* Индикатор скролла */}
       <div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce-slow"
-        style={{
-          animationDelay: '1.2s',
-        }}
+        style={{ animationDelay: '1.2s' }}
       >
         <svg
           className="w-6 h-6"
