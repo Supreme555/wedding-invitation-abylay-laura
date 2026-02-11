@@ -4,7 +4,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center"
+      className="relative min-h-screen flex items-start justify-center pt-[25vh]"
       style={{
         scrollSnapAlign: 'start',
       }}
@@ -29,8 +29,13 @@ export function Hero() {
       </div>
 
       {/* Контент */}
-      <div className="relative z-10 container mx-auto px-4 max-w-2xl">
-        <div className="text-center space-y-4 md:space-y-6">
+      <div className="relative z-10 container mx-auto pt-10 px-4 flex items-center justify-center">
+        <div
+          className="text-center space-y-4 md:space-y-6 py-1 md:py-16 px-6 md:px-10 backdrop-blur-sm h-[40vh] w-[300px] flex flex-col items-center justify-center animate-morph"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.01)',
+          }}
+        >
           {/* ВМЕСТЕ С СЕМЬЯМИ */}
           <div
             className="animate-fade-in-up"
@@ -66,7 +71,7 @@ export function Hero() {
                 color: '#4a4a3e',
               }}
             >
-              Лаура
+              Абылай
             </h1>
 
             {/* & */}
@@ -88,7 +93,7 @@ export function Hero() {
                 color: '#4a4a3e',
               }}
             >
-              Абылай
+              Лаура
             </h1>
           </div>
 
