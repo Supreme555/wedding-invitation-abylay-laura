@@ -20,7 +20,7 @@ export function Gallery() {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
   return (
-    <section id="gallery" className="py-16 bg-white">
+    <section id="gallery" className="min-h-screen flex items-center justify-center py-16 bg-white" style={{ scrollSnapAlign: 'start' }}>
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-serif font-bold text-center text-gray-900 mb-12">
           Наша история

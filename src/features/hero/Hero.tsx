@@ -1,57 +1,135 @@
 'use client';
 
-import { WEDDING_INFO } from '@/constants/wedding';
-import { formatDate } from '@/lib/utils';
-
 export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-pink-100"
+      className="relative min-h-screen flex items-center justify-center"
+      style={{
+        scrollSnapAlign: 'start',
+      }}
     >
-      <div className="container mx-auto px-4 text-center">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-6">
-            {WEDDING_INFO.groomName} & {WEDDING_INFO.brideName}
-          </h1>
+      {/* Фоновое изображение */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/images/backgrounds/bg-page-1.jpeg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center bottom',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Градиент-оверлей для читаемости */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(255,255,250,0.3) 0%, transparent 40%)',
+          }}
+        />
+      </div>
 
-          <div className="w-24 h-1 bg-rose-600 mx-auto mb-6"></div>
-
-          <p className="text-2xl md:text-3xl text-gray-700 mb-4">
-            Приглашаем вас на нашу свадьбу
-          </p>
-
-          <p className="text-xl md:text-2xl text-gray-600 mb-8">
-            {formatDate(WEDDING_INFO.weddingDate)}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#rsvp"
-              className="inline-flex items-center justify-center px-8 py-3 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors text-lg font-medium"
+      {/* Контент */}
+      <div className="relative z-10 container mx-auto px-4 max-w-2xl">
+        <div className="text-center space-y-4 md:space-y-6">
+          {/* ВМЕСТЕ С СЕМЬЯМИ */}
+          <div
+            className="animate-fade-in-up"
+            style={{
+              animationDelay: '0.3s',
+              opacity: 0,
+            }}
+          >
+            <p
+              className="text-xs md:text-sm uppercase tracking-[3px] md:tracking-[4px]"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                color: '#6b6b5e',
+              }}
             >
-              Подтвердить участие
-            </a>
-            <a
-              href="#details"
-              className="inline-flex items-center justify-center px-8 py-3 border-2 border-rose-600 text-rose-600 rounded-lg hover:bg-rose-50 transition-colors text-lg font-medium"
+              ВМЕСТЕ С СЕМЬЯМИ
+            </p>
+          </div>
+
+          {/* Имена */}
+          <div
+            className="animate-fade-in-up space-y-2 md:space-y-3"
+            style={{
+              animationDelay: '0.6s',
+              opacity: 0,
+            }}
+          >
+            {/* Лаура */}
+            <h1
+              className="text-[38px] leading-tight sm:text-[44px] md:text-[58px] lg:text-[66px]"
+              style={{
+                fontFamily: 'var(--font-great-vibes)',
+                color: '#4a4a3e',
+              }}
             >
-              Подробнее
-            </a>
+              Лаура
+            </h1>
+
+            {/* & */}
+            <p
+              className="text-[28px] md:text-[40px]"
+              style={{
+                fontFamily: 'var(--font-great-vibes)',
+                color: '#8a8a7a',
+              }}
+            >
+              &
+            </p>
+
+            {/* Абылай */}
+            <h1
+              className="text-[38px] leading-tight sm:text-[44px] md:text-[58px] lg:text-[66px]"
+              style={{
+                fontFamily: 'var(--font-great-vibes)',
+                color: '#4a4a3e',
+              }}
+            >
+              Абылай
+            </h1>
+          </div>
+
+          {/* Текст приглашения */}
+          <div
+            className="animate-fade-in-up pt-4"
+            style={{
+              animationDelay: '0.9s',
+              opacity: 0,
+            }}
+          >
+            <p
+              className="text-sm md:text-base italic"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                color: '#6b6b5e',
+              }}
+            >
+              просят вас разделить
+              <br />
+              радость их бракосочетания
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      {/* Индикатор скролла */}
+      <div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce-slow"
+        style={{
+          animationDelay: '1.2s',
+        }}
+      >
         <svg
-          className="w-6 h-6 text-rose-600"
+          className="w-6 h-6"
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
           viewBox="0 0 24 24"
-          stroke="currentColor"
+          stroke="#8a8a7a"
         >
           <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
         </svg>

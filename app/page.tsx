@@ -3,7 +3,6 @@ import { Countdown } from '@/features/countdown/Countdown';
 import { Details } from '@/features/details/Details';
 import { Gallery } from '@/features/gallery/Gallery';
 import { RSVP } from '@/features/rsvp/RSVP';
-import { Footer } from '@/features/footer/Footer';
 
 export default function Home() {
   return (
@@ -13,7 +12,6 @@ export default function Home() {
       <Details />
       <Gallery />
       <RSVP />
-      <Footer />
     </div>
   );
 }

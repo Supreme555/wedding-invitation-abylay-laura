@@ -27,7 +27,7 @@ export function Countdown() {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-rose-50 to-pink-50">
+    <section className="min-h-screen flex items-center justify-center py-16 bg-linear-to-br from-rose-50 to-pink-50" style={{ scrollSnapAlign: 'start' }}>
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-serif font-bold text-center text-gray-900 mb-12">
           До самого важного дня

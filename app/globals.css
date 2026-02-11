@@ -2,7 +2,8 @@
 
 @theme inline {
   --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
+  --font-serif: var(--font-cormorant);
+  --font-script: var(--font-great-vibes);
 }
 
 * {
@@ -13,6 +14,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 body {
@@ -22,5 +24,34 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-playfair), serif;
+  font-family: var(--font-cormorant), serif;
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-bounce-slow {
+  animation: bounce 2s ease-in-out infinite;
 }

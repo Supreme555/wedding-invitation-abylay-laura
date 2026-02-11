@@ -2,7 +2,7 @@ import { WEDDING_INFO, WEDDING_HASHTAG } from '@/constants/wedding';
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="min-h-screen flex items-center justify-center bg-gray-900 text-white py-12" style={{ scrollSnapAlign: 'start' }}>
       <div className="container mx-auto px-4">
         <div className="text-center">
           <h3 className="text-3xl font-serif font-bold mb-4">
