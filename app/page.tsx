@@ -1,17 +1,15 @@
 import { Hero } from '@/features/hero/Hero';
-import { Countdown } from '@/features/countdown/Countdown';
-import { Details } from '@/features/details/Details';
-import { Gallery } from '@/features/gallery/Gallery';
-import { RSVP } from '@/features/rsvp/RSVP';
+import { WeddingInfoSection } from '@/features/wedding-info/WeddingInfoSection';
+import { CountdownRSVPSection } from '@/features/countdown-rsvp/CountdownRSVPSection';
+import { DressCodeSection } from '@/features/dress-code/DressCodeSection';
 
 export default function Home() {
   return (
     <div className="min-h-screen">
       <Hero />
-      <Countdown />
-      <Details />
-      <Gallery />
-      <RSVP />
+      <WeddingInfoSection />
+      <CountdownRSVPSection />
+      <DressCodeSection />
     </div>
   );
 }
