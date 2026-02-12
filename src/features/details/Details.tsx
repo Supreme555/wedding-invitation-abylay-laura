@@ -5,7 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui';
 
 export function Details() {
   return (
-    <section id="details" className="min-h-screen flex items-center justify-center py-16 bg-white" style={{ scrollSnapAlign: 'start' }}>
+    <section id="details" className="min-h-screen flex items-center justify-center py-16 bg-[#f4e7ca]" style={{ scrollSnapAlign: 'start' }}>
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-serif font-bold text-center text-gray-900 mb-12">
           Детали события
