@@ -9,7 +9,7 @@ export function Countdown() {
 
   if (isExpired) {
     return (
-      <section className="py-16 bg-[#f4e7ca]">
+      <section className="py-16 bg-[#fef9db]">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-serif font-bold text-gray-900 mb-8">
             Свадьба состоялась!
@@ -27,7 +27,7 @@ export function Countdown() {
   ];
 
   return (
-    <section className="min-h-screen flex items-center justify-center py-16 bg-[#f4e7ca]" style={{ scrollSnapAlign: 'start' }}>
+    <section className="min-h-screen flex items-center justify-center py-16 bg-[#fef9db]" style={{ scrollSnapAlign: 'start' }}>
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-serif font-bold text-center text-gray-900 mb-12">
           До самого важного дня

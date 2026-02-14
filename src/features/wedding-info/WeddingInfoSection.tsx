@@ -6,7 +6,7 @@ import { InlineMusicPlayer } from '@/components/ui/InlineMusicPlayer';
 export function WeddingInfoSection() {
   return (
     <section
-      className="min-h-screen flex items-center justify-center py-16 bg-[#f4e7ca]"
+      className="min-h-screen flex items-center justify-center py-16 bg-[#fef9db]"
       style={{ scrollSnapAlign: 'start' }}
     >
       <div className="container mx-auto px-4 max-w-2xl">
