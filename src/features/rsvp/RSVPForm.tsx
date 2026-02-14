@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { Button, Card, CardContent } from '@/components/ui';
 
 export function RSVPForm() {
   const [formData, setFormData] = useState({
@@ -19,7 +18,6 @@ export function RSVPForm() {
     // TODO: Реализовать отправку формы на сервер
     console.log('RSVP Data:', formData);
 
-    // Симуляция отправки
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     setIsSubmitting(false);
@@ -28,78 +26,113 @@ export function RSVPForm() {
 
   if (submitted) {
     return (
-      <Card className="max-w-md mx-auto">
-        <CardContent className="p-8 text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h3
-            className="text-2xl font-bold mb-2"
-            style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
-          >
-            Спасибо!
-          </h3>
-          <p className="text-gray-600">
-            Мы получили ваш ответ. С нетерпением ждем встречи с вами!
-          </p>
-        </CardContent>
-      </Card>
+      <div className="text-center py-8">
+        <div
+          className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+          style={{ backgroundColor: '#e8e4d9' }}
+        >
+          <svg className="w-8 h-8" style={{ color: '#6b6b5e' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3
+          className="text-2xl font-bold italic"
+          style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
+        >
+          Спасибо!
+        </h3>
+        <p
+          className="mt-2 text-base italic"
+          style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
+        >
+          Мы получили ваш ответ.
+          <br />
+          С нетерпением ждем встречи!
+        </p>
+      </div>
     );
   }
 
   return (
-    <Card className="max-w-md mx-auto">
-      <CardContent className="p-6">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-              Имя и Фамилия *
-            </label>
-            <input
-              type="text"
-              id="name"
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-600 focus:border-transparent"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            />
-          </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Имя */}
+      <div>
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium mb-2"
+          style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
+        >
+          Имя и Фамилия
+        </label>
+        <input
+          type="text"
+          id="name"
+          required
+          className="w-full px-4 py-3 rounded-none outline-none transition-colors"
+          style={{
+            fontFamily: 'var(--font-cormorant)',
+            color: '#4a4a3e',
+            backgroundColor: 'transparent',
+            borderBottom: '1px solid #c5c0b0',
+          }}
+          placeholder="Введите ваше имя"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        />
+      </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Вы придете? *
-            </label>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="radio"
-                  name="attending"
-                  checked={formData.attending}
-                  onChange={() => setFormData({ ...formData, attending: true })}
-                  className="w-4 h-4 text-rose-600 focus:ring-rose-500 border-gray-300"
-                />
-                <span className="ml-2">Да, обязательно!</span>
-              </label>
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="radio"
-                  name="attending"
-                  checked={!formData.attending}
-                  onChange={() => setFormData({ ...formData, attending: false })}
-                  className="w-4 h-4 text-rose-600 focus:ring-rose-500 border-gray-300"
-                />
-                <span className="ml-2">К сожалению, нет</span>
-              </label>
-            </div>
-          </div>
+      {/* Присутствие */}
+      <div>
+        <label
+          className="block text-sm font-medium mb-3"
+          style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
+        >
+          Вы придете?
+        </label>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={() => setFormData({ ...formData, attending: true })}
+            className="flex-1 py-3 text-base font-medium transition-colors"
+            style={{
+              fontFamily: 'var(--font-cormorant)',
+              color: formData.attending ? '#fef9db' : '#6b6b5e',
+              backgroundColor: formData.attending ? '#6b6b5e' : 'transparent',
+              border: '1px solid #c5c0b0',
+            }}
+          >
+            Да, с радостью!
+          </button>
+          <button
+            type="button"
+            onClick={() => setFormData({ ...formData, attending: false })}
+            className="flex-1 py-3 text-base font-medium transition-colors"
+            style={{
+              fontFamily: 'var(--font-cormorant)',
+              color: !formData.attending ? '#fef9db' : '#6b6b5e',
+              backgroundColor: !formData.attending ? '#6b6b5e' : 'transparent',
+              border: '1px solid #c5c0b0',
+            }}
+          >
+            К сожалению, нет
+          </button>
+        </div>
+      </div>
 
-          <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
-            {isSubmitting ? 'Отправка...' : 'Отправить'}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+      {/* Кнопка отправки */}
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full py-3 text-base uppercase tracking-widest font-semibold transition-opacity hover:opacity-80 disabled:opacity-50"
+        style={{
+          fontFamily: 'var(--font-cormorant)',
+          color: '#fef9db',
+          backgroundColor: '#6b6b5e',
+          border: '2px solid #8a8a7a',
+        }}
+      >
+        {isSubmitting ? 'Отправка...' : 'ОТПРАВИТЬ'}
+      </button>
+    </form>
   );
 }

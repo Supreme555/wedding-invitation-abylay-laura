@@ -2,66 +2,80 @@
 
 import { useCountdown } from '@/hooks/useCountdown';
 import { WEDDING_INFO } from '@/constants/wedding';
-import { Card } from '@/components/ui';
 import { RSVPForm } from '@/features/rsvp/RSVPForm';
 
 export function CountdownRSVPSection() {
   const { days, hours, minutes, seconds, isExpired } = useCountdown(WEDDING_INFO.weddingDate);
 
   const timeUnits = [
-    { label: 'Дней', value: days },
-    { label: 'Часов', value: hours },
-    { label: 'Минут', value: minutes },
-    { label: 'Секунд', value: seconds },
+    { label: 'дней', value: days },
+    { label: 'часов', value: hours },
+    { label: 'минут', value: minutes },
+    { label: 'секунд', value: seconds },
   ];
 
   return (
     <section
-      className="min-h-screen flex items-center justify-center py-16 bg-[#fef9db]"
-      style={{ scrollSnapAlign: 'start' }}
+      className="min-h-screen flex items-center justify-center bg-[#fef9db]"
+      style={{ scrollSnapAlign: 'start', padding: '2rem 0' }}
     >
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="space-y-16">
+      <div className="container mx-auto px-6 max-w-md">
+        <div className="flex flex-col items-center">
           {/* Таймер */}
           {!isExpired && (
-            <div>
+            <>
               <h2
-                className="text-3xl md:text-4xl font-bold text-center mb-8"
+                className="text-3xl md:text-4xl font-bold italic text-center"
                 style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
               >
-                До самого важного дня
+                До нашего торжества
               </h2>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+              <div className="mt-8 grid grid-cols-4 gap-4 w-full">
                 {timeUnits.map((unit) => (
-                  <Card key={unit.label} className="p-6 text-center">
-                    <div className="text-4xl md:text-5xl font-bold text-rose-600 mb-2">
+                  <div key={unit.label} className="flex flex-col items-center">
+                    <span
+                      className="text-5xl md:text-6xl font-bold"
+                      style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
+                    >
                       {String(unit.value).padStart(2, '0')}
-                    </div>
-                    <div className="text-gray-600 text-sm md:text-base">
+                    </span>
+                    <span
+                      className="mt-1 text-sm uppercase tracking-wider"
+                      style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
+                    >
                       {unit.label}
-                    </div>
-                  </Card>
+                    </span>
+                  </div>
                 ))}
               </div>
-            </div>
+
+              {/* Разделитель */}
+              <div
+                className="mt-10 w-16 h-px"
+                style={{ backgroundColor: '#c5c0b0' }}
+              />
+            </>
           )}
 
-          {/* Форма RSVP */}
-          <div>
-            <h2
-              className="text-3xl md:text-4xl font-bold text-center mb-3"
-              style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
-            >
-              Подтвердите участие
-            </h2>
-            <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-              Пожалуйста, подтвердите ваше участие до 1 июля 2026 года
-            </p>
+          {/* RSVP */}
+          <h2
+            className="mt-10 text-3xl md:text-4xl font-bold italic text-center"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
+          >
+            Подтвердите участие
+          </h2>
+          <p
+            className="mt-3 text-lg italic text-center"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
+          >
+            Пожалуйста, сообщите нам о вашем присутствии
+            <br />
+            до 1 июля 2026 года
+          </p>
 
-            <div className="max-w-2xl mx-auto">
-              <RSVPForm />
-            </div>
+          <div className="mt-8 w-full">
+            <RSVPForm />
           </div>
         </div>
       </div>
