@@ -22,36 +22,38 @@ export function Hero() {
         }}
       />
 
-      {/* Переключатель языка */}
-      <div className="absolute top-4 right-4 z-20 flex gap-1">
-        <button
-          onClick={() => setLocale('ru')}
-          className="px-3 py-1 text-sm uppercase tracking-wider font-semibold transition-opacity"
-          style={{
-            fontFamily: 'var(--font-cormorant)',
-            color: locale === 'ru' ? '#fef9db' : '#6b6b5e',
-            backgroundColor: locale === 'ru' ? '#6b6b5e' : 'rgba(255,255,255,0.4)',
-            borderRadius: '2px',
-          }}
-        >
-          РУС
-        </button>
-        <button
-          onClick={() => setLocale('kz')}
-          className="px-3 py-1 text-sm uppercase tracking-wider font-semibold transition-opacity"
-          style={{
-            fontFamily: 'var(--font-cormorant)',
-            color: locale === 'kz' ? '#fef9db' : '#6b6b5e',
-            backgroundColor: locale === 'kz' ? '#6b6b5e' : 'rgba(255,255,255,0.4)',
-            borderRadius: '2px',
-          }}
-        >
-          ҚАЗ
-        </button>
-      </div>
-
       {/* Контент */}
       <div className="relative z-10 container mx-auto px-4">
+        {/* Переключатель языка */}
+        <div className="flex justify-end pt-3 pr-1">
+          <div className="flex gap-1">
+            <button
+              onClick={() => setLocale('ru')}
+              className="px-3 py-1 text-sm uppercase tracking-wider font-semibold transition-opacity"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                color: locale === 'ru' ? '#fef9db' : '#6b6b5e',
+                backgroundColor: locale === 'ru' ? '#6b6b5e' : 'rgba(255,255,255,0.4)',
+                borderRadius: '2px',
+              }}
+            >
+              РУС
+            </button>
+            <button
+              onClick={() => setLocale('kz')}
+              className="px-3 py-1 text-sm uppercase tracking-wider font-semibold transition-opacity"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                color: locale === 'kz' ? '#fef9db' : '#6b6b5e',
+                backgroundColor: locale === 'kz' ? '#6b6b5e' : 'rgba(255,255,255,0.4)',
+                borderRadius: '2px',
+              }}
+            >
+              ҚАЗ
+            </button>
+          </div>
+        </div>
+
         <div
           className="text-center space-y-4 md:space-y-6 py-8 px-6 h-[40vh] mx-auto flex flex-col items-center justify-center animate-morph"
           style={{ backgroundColor: 'rgba(255, 255, 255, 0.01)' }}
