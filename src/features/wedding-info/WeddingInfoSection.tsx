@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { WEDDING_INFO, VENUE_LINK } from '@/constants/wedding';
-import { InlineMusicPlayer } from '@/components/ui/InlineMusicPlayer';
+
 
 const DAYS_OF_WEEK = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
 const MONTH_NAMES = [
@@ -42,8 +42,8 @@ export function WeddingInfoSection() {
 
   return (
     <section
-      className="min-h-screen flex items-center justify-center py-12 bg-[#fef9db]"
-      style={{ scrollSnapAlign: 'start' }}
+      className="min-h-screen flex items-center justify-center bg-[#fef9db]"
+      style={{ scrollSnapAlign: 'start', padding: '2rem 0' }}
     >
       <div className="container mx-auto px-6 max-w-md">
         <div className="flex flex-col items-center">
@@ -57,7 +57,7 @@ export function WeddingInfoSection() {
 
           {/* Приглашение */}
           <p
-            className="mt-6 text-lg md:text-xl leading-relaxed italic text-center"
+            className="mt-5 text-lg md:text-xl leading-relaxed italic text-center"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
           >
             От всей души хотим пригласить вас
@@ -70,7 +70,7 @@ export function WeddingInfoSection() {
           </p>
 
           {/* Календарь */}
-          <div className="mt-10 w-full" style={{ maxWidth: '320px' }}>
+          <div className="mt-8 w-full" style={{ maxWidth: '320px' }}>
             {/* Месяц и год */}
             <div className="flex justify-between items-center mb-4 px-1">
               <span
@@ -144,15 +144,29 @@ export function WeddingInfoSection() {
             ))}
           </div>
 
+          {/* Время */}
+          <p
+            className="mt-8 text-base uppercase tracking-wider"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
+          >
+            Начало в
+          </p>
+          <p
+            className="mt-1 text-4xl md:text-5xl font-bold"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
+          >
+            {WEDDING_INFO.time}
+          </p>
+
           {/* Локация */}
           <h3
-            className="mt-12 text-3xl md:text-4xl font-bold italic"
+            className="mt-10 text-3xl md:text-4xl font-bold italic"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
           >
             ЛОКАЦИЯ
           </h3>
           <p
-            className="mt-4 text-lg italic text-center"
+            className="mt-3 text-lg italic text-center"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
           >
             {WEDDING_INFO.venue.name}
@@ -169,7 +183,7 @@ export function WeddingInfoSection() {
             href={VENUE_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-block px-8 py-3 text-base uppercase tracking-widest font-semibold transition-opacity hover:opacity-80"
+            className="mt-6 inline-block px-8 py-3 text-base uppercase tracking-widest font-semibold transition-opacity hover:opacity-80"
             style={{
               fontFamily: 'var(--font-cormorant)',
               color: '#fef9db',
@@ -180,10 +194,6 @@ export function WeddingInfoSection() {
             ПОСМОТРЕТЬ НА КАРТЕ
           </a>
 
-          {/* Музыкальный плеер */}
-          <div className="mt-8">
-            <InlineMusicPlayer src="/audio/wedding-music.mp3" />
-          </div>
         </div>
       </div>
     </section>

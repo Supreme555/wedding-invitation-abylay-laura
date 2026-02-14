@@ -1,5 +1,7 @@
 'use client';
 
+import { InlineMusicPlayer } from '@/components/ui/InlineMusicPlayer';
+
 export function Hero() {
   return (
     <section
@@ -76,6 +78,11 @@ export function Hero() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Музыкальный плеер */}
+      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-10">
+        <InlineMusicPlayer src="/audio/wedding-music.mp3" />
       </div>
 
       {/* Индикатор скролла */}
