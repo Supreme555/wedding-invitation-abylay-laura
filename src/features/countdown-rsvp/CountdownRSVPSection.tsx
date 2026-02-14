@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useCountdown } from '@/hooks/useCountdown';
 import { WEDDING_INFO } from '@/constants/wedding';
 import { RSVPForm } from '@/features/rsvp/RSVPForm';
@@ -16,16 +17,25 @@ export function CountdownRSVPSection() {
 
   return (
     <section
-      className="min-h-screen flex items-center justify-center bg-[#fef9db]"
-      style={{ padding: '2rem 0' }}
+      className="min-h-screen bg-[#fef9db]"
+      style={{ paddingBottom: '2rem' }}
     >
+      {/* Изображение — без полей */}
+      <Image
+        src="/images/CountdownRSVPSection/white-girl.png"
+        alt=""
+        width={800}
+        height={500}
+        className="w-full object-cover"
+      />
+
       <div className="container mx-auto px-6 max-w-md">
         <div className="flex flex-col items-center">
           {/* Таймер */}
           {!isExpired && (
             <>
               <h2
-                className="text-3xl md:text-4xl font-bold italic text-center"
+                className="mt-8 text-3xl md:text-4xl font-bold italic text-center"
                 style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
               >
                 До нашего торжества
