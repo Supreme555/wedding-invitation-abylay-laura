@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-start justify-center pt-[8vh]"
+      className="relative min-h-screen flex items-start justify-center pt-[4vh]"
     >
       {/* Фоновое изображение */}
       <div
