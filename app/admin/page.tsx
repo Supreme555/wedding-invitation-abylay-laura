@@ -9,6 +9,8 @@ interface Rsvp {
   id: number;
   name: string;
   attending: boolean;
+  withPartner: boolean;
+  partnerName: string | null;
   createdAt: string;
 }
 
@@ -53,31 +55,32 @@ export default function AdminPage() {
     const totalCount = rsvps.length;
     const attendingCount = rsvps.filter((r) => r.attending).length;
     const decliningCount = totalCount - attendingCount;
+    const withPartnerCount = rsvps.filter((r) => r.withPartner).length;
 
     return (
       <div
         className="min-h-screen py-12 px-4"
         style={{ backgroundColor: '#fef9db' }}
       >
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <h1
-            className="text-4xl font-bold italic text-center mb-2"
+            className="text-6xl font-bold italic text-center mb-2"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
           >
             RSVP ответы
           </h1>
 
           <div
-            className="text-center mb-8 text-lg"
+            className="text-center mb-8 text-2xl"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
           >
             Всего: {totalCount} &middot; Придут: {attendingCount} &middot; Не
-            придут: {decliningCount}
+            придут: {decliningCount} &middot; С парой: {withPartnerCount}
           </div>
 
           {rsvps.length === 0 ? (
             <p
-              className="text-center text-lg italic"
+              className="text-center text-2xl italic"
               style={{
                 fontFamily: 'var(--font-cormorant)',
                 color: '#8a8a7a',
@@ -90,10 +93,10 @@ export default function AdminPage() {
               <table className="w-full" style={{ borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ borderBottom: '2px solid #c5c0b0' }}>
-                    {['#', 'Имя', 'Придёт?', 'Дата'].map((header) => (
+                    {['#', 'Имя', 'Придёт?', 'Партнёр', 'Дата'].map((header) => (
                       <th
                         key={header}
-                        className="py-3 px-4 text-left text-sm uppercase tracking-wider"
+                        className="py-3 px-4 text-left text-xl uppercase tracking-wider"
                         style={{
                           fontFamily: 'var(--font-cormorant)',
                           color: '#6b6b5e',
@@ -111,7 +114,7 @@ export default function AdminPage() {
                       style={{ borderBottom: '1px solid #e8e4d9' }}
                     >
                       <td
-                        className="py-3 px-4"
+                        className="py-3 px-4 text-xl"
                         style={{
                           fontFamily: 'var(--font-cormorant)',
                           color: '#8a8a7a',
@@ -120,7 +123,7 @@ export default function AdminPage() {
                         {index + 1}
                       </td>
                       <td
-                        className="py-3 px-4 font-medium"
+                        className="py-3 px-4 text-xl font-medium"
                         style={{
                           fontFamily: 'var(--font-cormorant)',
                           color: '#4a4a3e',
@@ -129,7 +132,7 @@ export default function AdminPage() {
                         {rsvp.name}
                       </td>
                       <td
-                        className="py-3 px-4"
+                        className="py-3 px-4 text-xl"
                         style={{
                           fontFamily: 'var(--font-cormorant)',
                           color: rsvp.attending ? '#5a7a5a' : '#b45454',
@@ -138,7 +141,16 @@ export default function AdminPage() {
                         {rsvp.attending ? 'Да' : 'Нет'}
                       </td>
                       <td
-                        className="py-3 px-4"
+                        className="py-3 px-4 text-xl"
+                        style={{
+                          fontFamily: 'var(--font-cormorant)',
+                          color: rsvp.partnerName ? '#4a4a3e' : '#c5c0b0',
+                        }}
+                      >
+                        {rsvp.partnerName || '—'}
+                      </td>
+                      <td
+                        className="py-3 px-4 text-xl"
                         style={{
                           fontFamily: 'var(--font-cormorant)',
                           color: '#8a8a7a',
@@ -164,7 +176,7 @@ export default function AdminPage() {
     >
       <div className="w-full max-w-sm">
         <h1
-          className="text-3xl font-bold italic text-center mb-8"
+          className="text-5xl font-bold italic text-center mb-8"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
         >
           Панель администратора
@@ -174,7 +186,7 @@ export default function AdminPage() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium mb-2"
+              className="block text-xl font-medium mb-2"
               style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
             >
               Пароль
@@ -183,7 +195,7 @@ export default function AdminPage() {
               type="password"
               id="password"
               required
-              className="w-full px-4 py-3 rounded-none outline-none transition-colors"
+              className="w-full px-4 py-3 text-2xl rounded-none outline-none transition-colors"
               style={{
                 fontFamily: 'var(--font-cormorant)',
                 color: '#4a4a3e',
@@ -198,7 +210,7 @@ export default function AdminPage() {
 
           {error && (
             <p
-              className="text-sm text-center"
+              className="text-xl text-center"
               style={{ fontFamily: 'var(--font-cormorant)', color: '#b45454' }}
             >
               {error}
@@ -208,7 +220,7 @@ export default function AdminPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 text-base uppercase tracking-widest font-semibold transition-opacity hover:opacity-80 disabled:opacity-50"
+            className="w-full py-3 text-2xl uppercase tracking-widest font-semibold transition-opacity hover:opacity-80 disabled:opacity-50"
             style={{
               fontFamily: 'var(--font-cormorant)',
               color: '#fef9db',

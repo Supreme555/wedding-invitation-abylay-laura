@@ -9,6 +9,8 @@ export function RSVPForm() {
   const [formData, setFormData] = useState({
     name: '',
     attending: true,
+    withPartner: false,
+    partnerName: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -81,7 +83,7 @@ export function RSVPForm() {
             backgroundColor: 'transparent',
             borderBottom: '1px solid #c5c0b0',
           }}
-          placeholder="Введите ваше имя"
+          placeholder="Введите ваше имя и фамилию"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
@@ -111,7 +113,7 @@ export function RSVPForm() {
           </button>
           <button
             type="button"
-            onClick={() => setFormData({ ...formData, attending: false })}
+            onClick={() => setFormData({ ...formData, attending: false, withPartner: false, partnerName: '' })}
             className="flex-1 py-3 text-base font-medium transition-colors"
             style={{
               fontFamily: 'var(--font-cormorant)',
@@ -124,6 +126,63 @@ export function RSVPForm() {
           </button>
         </div>
       </div>
+
+      {/* Приду с парой */}
+      {formData.attending && (
+        <div>
+          <label
+            className="block text-sm font-medium mb-3"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
+          >
+            Приду с парой
+          </label>
+          <div className="flex gap-4">
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, withPartner: true })}
+              className="flex-1 py-3 text-base font-medium transition-colors"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                color: formData.withPartner ? '#fef9db' : '#6b6b5e',
+                backgroundColor: formData.withPartner ? '#6b6b5e' : 'transparent',
+                border: '1px solid #c5c0b0',
+              }}
+            >
+              Да
+            </button>
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, withPartner: false, partnerName: '' })}
+              className="flex-1 py-3 text-base font-medium transition-colors"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                color: !formData.withPartner ? '#fef9db' : '#6b6b5e',
+                backgroundColor: !formData.withPartner ? '#6b6b5e' : 'transparent',
+                border: '1px solid #c5c0b0',
+              }}
+            >
+              Нет
+            </button>
+          </div>
+
+          {formData.withPartner && (
+            <input
+              type="text"
+              required
+              className="w-full px-4 py-3 mt-4 rounded-none outline-none transition-colors"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                color: '#4a4a3e',
+                backgroundColor: 'transparent',
+                borderBottom: '1px solid #c5c0b0',
+              }}
+              placeholder="Имя и фамилия партнёра"
+              value={formData.partnerName}
+              onChange={(e) => setFormData({ ...formData, partnerName: e.target.value })}
+            />
+          )}
+        </div>
+      )}
 
       {error && (
         <p
