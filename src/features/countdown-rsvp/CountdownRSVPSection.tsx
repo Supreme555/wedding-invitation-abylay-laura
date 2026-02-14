@@ -17,7 +17,7 @@ export function CountdownRSVPSection() {
   return (
     <section
       className="min-h-screen flex items-center justify-center bg-[#fef9db]"
-      style={{ scrollSnapAlign: 'start', padding: '2rem 0' }}
+      style={{ padding: '2rem 0' }}
     >
       <div className="container mx-auto px-6 max-w-md">
         <div className="flex flex-col items-center">

@@ -7,7 +7,6 @@ export function Hero() {
     <section
       id="home"
       className="relative min-h-screen flex items-start justify-center pt-[8vh]"
-      style={{ scrollSnapAlign: 'start' }}
     >
       {/* Фоновое изображение */}
       <div
