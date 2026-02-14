@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-start justify-center pt-[4vh]"
+      className="relative min-h-screen flex items-start justify-center"
     >
       {/* Фоновое изображение */}
       <div
@@ -30,7 +30,7 @@ export function Hero() {
             style={{ animationDelay: '0.3s', opacity: 0 }}
           >
             <p
-              className="text-xs md:text-sm uppercase tracking-[3px] md:tracking-[4px]"
+              className="text-sm md:text-base uppercase tracking-[3px] md:tracking-[4px]"
               style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
             >
               ВМЕСТЕ С СЕМЬЯМИ
@@ -42,21 +42,21 @@ export function Hero() {
             style={{ animationDelay: '0.6s', opacity: 0 }}
           >
             <h1
-              className="text-[38px] leading-tight sm:text-[44px] md:text-[58px] lg:text-[66px]"
+              className="text-[48px] leading-tight sm:text-[56px] md:text-[68px] lg:text-[78px]"
               style={{ fontFamily: 'var(--font-great-vibes)', color: '#4a4a3e' }}
             >
               Абылай
             </h1>
 
             <p
-              className="text-[28px] md:text-[40px]"
+              className="text-[36px] md:text-[48px]"
               style={{ fontFamily: 'var(--font-great-vibes)', color: '#8a8a7a' }}
             >
               &
             </p>
 
             <h1
-              className="text-[38px] leading-tight sm:text-[44px] md:text-[58px] lg:text-[66px]"
+              className="text-[48px] leading-tight sm:text-[56px] md:text-[68px] lg:text-[78px]"
               style={{ fontFamily: 'var(--font-great-vibes)', color: '#4a4a3e' }}
             >
               Лаура
@@ -64,11 +64,11 @@ export function Hero() {
           </div>
 
           <div
-            className="animate-fade-in-up pt-4"
+            className="animate-fade-in-up"
             style={{ animationDelay: '0.9s', opacity: 0 }}
           >
             <p
-              className="text-sm md:text-base italic"
+              className="text-base md:text-lg italic"
               style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
             >
               просят вас разделить
