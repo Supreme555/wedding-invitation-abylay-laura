@@ -19,6 +19,13 @@ export default function AdminPage() {
   const [rsvps, setRsvps] = useState<Rsvp[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editForm, setEditForm] = useState({ name: '', attending: true, partnerName: '' });
+  const [isCreating, setIsCreating] = useState(false);
+  const [createForm, setCreateForm] = useState({ name: '', attending: true, partnerName: '' });
+  const [isSaving, setIsSaving] = useState(false);
+
+  const adminHeaders = { 'x-admin-password': password };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -27,7 +34,7 @@ export default function AdminPage() {
 
     try {
       const response = await axios.get<Rsvp[]>(`${API_URL}/rsvp`, {
-        headers: { 'x-admin-password': password },
+        headers: adminHeaders,
       });
       setRsvps(response.data);
     } catch (err: unknown) {
@@ -41,6 +48,80 @@ export default function AdminPage() {
     }
   };
 
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Удалить эту запись?')) return;
+    setIsSaving(true);
+    try {
+      await axios.delete(`${API_URL}/rsvp/${id}`, { headers: adminHeaders });
+      setRsvps((prev) => prev?.filter((r) => r.id !== id) ?? null);
+    } catch {
+      alert('Ошибка при удалении');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const startEdit = (rsvp: Rsvp) => {
+    setIsCreating(false);
+    setEditingId(rsvp.id);
+    setEditForm({
+      name: rsvp.name,
+      attending: rsvp.attending,
+      partnerName: rsvp.partnerName ?? '',
+    });
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+  };
+
+  const handleSave = async (id: number) => {
+    setIsSaving(true);
+    try {
+      const response = await axios.patch<Rsvp>(
+        `${API_URL}/rsvp/${id}`,
+        {
+          name: editForm.name,
+          attending: editForm.attending,
+          withPartner: editForm.partnerName.trim() !== '',
+          partnerName: editForm.partnerName.trim() || null,
+        },
+        { headers: adminHeaders },
+      );
+      setRsvps((prev) =>
+        prev?.map((r) => (r.id === id ? response.data : r)) ?? null,
+      );
+      setEditingId(null);
+    } catch {
+      alert('Ошибка при сохранении');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCreate = async () => {
+    if (!createForm.name.trim()) return;
+    setIsSaving(true);
+    try {
+      const response = await axios.post<Rsvp>(
+        `${API_URL}/rsvp`,
+        {
+          name: createForm.name.trim(),
+          attending: createForm.attending,
+          withPartner: createForm.partnerName.trim() !== '',
+          partnerName: createForm.partnerName.trim() || null,
+        },
+      );
+      setRsvps((prev) => [response.data, ...(prev ?? [])]);
+      setIsCreating(false);
+      setCreateForm({ name: '', attending: true, partnerName: '' });
+    } catch {
+      alert('Ошибка при создании');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ru-RU', {
       day: '2-digit',
@@ -49,6 +130,10 @@ export default function AdminPage() {
       hour: '2-digit',
       minute: '2-digit',
     });
+  };
+
+  const cellStyle = {
+    fontFamily: 'var(--font-cormorant)',
   };
 
   if (rsvps !== null) {
@@ -71,14 +156,34 @@ export default function AdminPage() {
           </h1>
 
           <div
-            className="text-center mb-8 text-2xl"
+            className="text-center mb-4 text-2xl"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
           >
             Всего: {totalCount} &middot; Придут: {attendingCount} &middot; Не
             придут: {decliningCount} &middot; С парой: {withPartnerCount}
           </div>
 
-          {rsvps.length === 0 ? (
+          <div className="text-center mb-8">
+            <button
+              className="py-2 px-6 text-xl uppercase tracking-widest font-semibold transition-opacity hover:opacity-80"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                color: '#fef9db',
+                backgroundColor: '#6b6b5e',
+                border: '2px solid #8a8a7a',
+              }}
+              onClick={() => {
+                setEditingId(null);
+                setIsCreating(true);
+                setCreateForm({ name: '', attending: true, partnerName: '' });
+              }}
+              disabled={isCreating || isSaving}
+            >
+              + Создать
+            </button>
+          </div>
+
+          {rsvps.length === 0 && !isCreating ? (
             <p
               className="text-center text-2xl italic"
               style={{
@@ -93,7 +198,7 @@ export default function AdminPage() {
               <table className="w-full" style={{ borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ borderBottom: '2px solid #c5c0b0' }}>
-                    {['#', 'Имя', 'Придёт?', 'Партнёр', 'Дата'].map((header) => (
+                    {['#', 'Имя', 'Придёт?', 'Партнёр', 'Дата', 'Действия'].map((header) => (
                       <th
                         key={header}
                         className="py-3 px-4 text-left text-xl uppercase tracking-wider"
@@ -108,6 +213,85 @@ export default function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
+                  {isCreating && (
+                    <tr style={{ borderBottom: '1px solid #e8e4d9', backgroundColor: '#faf5d0' }}>
+                      <td
+                        className="py-3 px-4 text-xl"
+                        style={{ ...cellStyle, color: '#8a8a7a' }}
+                      >
+                        *
+                      </td>
+                      <td className="py-3 px-4">
+                        <input
+                          className="text-xl w-full px-2 py-1 outline-none"
+                          style={{
+                            ...cellStyle,
+                            color: '#4a4a3e',
+                            backgroundColor: 'transparent',
+                            borderBottom: '1px solid #c5c0b0',
+                          }}
+                          placeholder="Имя и фамилия"
+                          value={createForm.name}
+                          onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
+                          autoFocus
+                        />
+                      </td>
+                      <td className="py-3 px-4">
+                        <select
+                          className="text-xl px-2 py-1 outline-none"
+                          style={{
+                            ...cellStyle,
+                            color: createForm.attending ? '#5a7a5a' : '#b45454',
+                            backgroundColor: 'transparent',
+                            borderBottom: '1px solid #c5c0b0',
+                          }}
+                          value={createForm.attending ? 'yes' : 'no'}
+                          onChange={(e) => setCreateForm({ ...createForm, attending: e.target.value === 'yes' })}
+                        >
+                          <option value="yes">Да</option>
+                          <option value="no">Нет</option>
+                        </select>
+                      </td>
+                      <td className="py-3 px-4">
+                        <input
+                          className="text-xl w-full px-2 py-1 outline-none"
+                          style={{
+                            ...cellStyle,
+                            color: '#4a4a3e',
+                            backgroundColor: 'transparent',
+                            borderBottom: '1px solid #c5c0b0',
+                          }}
+                          placeholder="—"
+                          value={createForm.partnerName}
+                          onChange={(e) => setCreateForm({ ...createForm, partnerName: e.target.value })}
+                        />
+                      </td>
+                      <td
+                        className="py-3 px-4 text-xl"
+                        style={{ ...cellStyle, color: '#8a8a7a' }}
+                      >
+                        —
+                      </td>
+                      <td className="py-3 px-4 whitespace-nowrap">
+                        <button
+                          className="text-lg mr-3 uppercase tracking-wider font-semibold disabled:opacity-50"
+                          style={{ ...cellStyle, color: '#5a7a5a' }}
+                          onClick={handleCreate}
+                          disabled={isSaving}
+                        >
+                          {isSaving ? 'Сохраняю...' : 'Сохранить'}
+                        </button>
+                        <button
+                          className="text-lg uppercase tracking-wider font-semibold disabled:opacity-50"
+                          style={{ ...cellStyle, color: '#8a8a7a' }}
+                          onClick={() => setIsCreating(false)}
+                          disabled={isSaving}
+                        >
+                          Отмена
+                        </button>
+                      </td>
+                    </tr>
+                  )}
                   {rsvps.map((rsvp, index) => (
                     <tr
                       key={rsvp.id}
@@ -115,49 +299,133 @@ export default function AdminPage() {
                     >
                       <td
                         className="py-3 px-4 text-xl"
-                        style={{
-                          fontFamily: 'var(--font-cormorant)',
-                          color: '#8a8a7a',
-                        }}
+                        style={{ ...cellStyle, color: '#8a8a7a' }}
                       >
                         {index + 1}
                       </td>
-                      <td
-                        className="py-3 px-4 text-xl font-medium"
-                        style={{
-                          fontFamily: 'var(--font-cormorant)',
-                          color: '#4a4a3e',
-                        }}
-                      >
-                        {rsvp.name}
-                      </td>
-                      <td
-                        className="py-3 px-4 text-xl"
-                        style={{
-                          fontFamily: 'var(--font-cormorant)',
-                          color: rsvp.attending ? '#5a7a5a' : '#b45454',
-                        }}
-                      >
-                        {rsvp.attending ? 'Да' : 'Нет'}
-                      </td>
-                      <td
-                        className="py-3 px-4 text-xl"
-                        style={{
-                          fontFamily: 'var(--font-cormorant)',
-                          color: rsvp.partnerName ? '#4a4a3e' : '#c5c0b0',
-                        }}
-                      >
-                        {rsvp.partnerName || '—'}
-                      </td>
-                      <td
-                        className="py-3 px-4 text-xl"
-                        style={{
-                          fontFamily: 'var(--font-cormorant)',
-                          color: '#8a8a7a',
-                        }}
-                      >
-                        {formatDate(rsvp.createdAt)}
-                      </td>
+
+                      {editingId === rsvp.id ? (
+                        <>
+                          <td className="py-3 px-4">
+                            <input
+                              className="text-xl w-full px-2 py-1 outline-none"
+                              style={{
+                                ...cellStyle,
+                                color: '#4a4a3e',
+                                backgroundColor: 'transparent',
+                                borderBottom: '1px solid #c5c0b0',
+                              }}
+                              value={editForm.name}
+                              onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                            />
+                          </td>
+                          <td className="py-3 px-4">
+                            <select
+                              className="text-xl px-2 py-1 outline-none"
+                              style={{
+                                ...cellStyle,
+                                color: editForm.attending ? '#5a7a5a' : '#b45454',
+                                backgroundColor: 'transparent',
+                                borderBottom: '1px solid #c5c0b0',
+                              }}
+                              value={editForm.attending ? 'yes' : 'no'}
+                              onChange={(e) => setEditForm({ ...editForm, attending: e.target.value === 'yes' })}
+                            >
+                              <option value="yes">Да</option>
+                              <option value="no">Нет</option>
+                            </select>
+                          </td>
+                          <td className="py-3 px-4">
+                            <input
+                              className="text-xl w-full px-2 py-1 outline-none"
+                              style={{
+                                ...cellStyle,
+                                color: '#4a4a3e',
+                                backgroundColor: 'transparent',
+                                borderBottom: '1px solid #c5c0b0',
+                              }}
+                              placeholder="—"
+                              value={editForm.partnerName}
+                              onChange={(e) => setEditForm({ ...editForm, partnerName: e.target.value })}
+                            />
+                          </td>
+                          <td
+                            className="py-3 px-4 text-xl"
+                            style={{ ...cellStyle, color: '#8a8a7a' }}
+                          >
+                            {formatDate(rsvp.createdAt)}
+                          </td>
+                          <td className="py-3 px-4 whitespace-nowrap">
+                            <button
+                              className="text-lg mr-3 uppercase tracking-wider font-semibold disabled:opacity-50"
+                              style={{ ...cellStyle, color: '#5a7a5a' }}
+                              onClick={() => handleSave(rsvp.id)}
+                              disabled={isSaving}
+                            >
+                              {isSaving ? 'Сохраняю...' : 'Сохранить'}
+                            </button>
+                            <button
+                              className="text-lg uppercase tracking-wider font-semibold disabled:opacity-50"
+                              style={{ ...cellStyle, color: '#8a8a7a' }}
+                              onClick={cancelEdit}
+                              disabled={isSaving}
+                            >
+                              Отмена
+                            </button>
+                          </td>
+                        </>
+                      ) : (
+                        <>
+                          <td
+                            className="py-3 px-4 text-xl font-medium"
+                            style={{ ...cellStyle, color: '#4a4a3e' }}
+                          >
+                            {rsvp.name}
+                          </td>
+                          <td
+                            className="py-3 px-4 text-xl"
+                            style={{
+                              ...cellStyle,
+                              color: rsvp.attending ? '#5a7a5a' : '#b45454',
+                            }}
+                          >
+                            {rsvp.attending ? 'Да' : 'Нет'}
+                          </td>
+                          <td
+                            className="py-3 px-4 text-xl"
+                            style={{
+                              ...cellStyle,
+                              color: rsvp.partnerName ? '#4a4a3e' : '#c5c0b0',
+                            }}
+                          >
+                            {rsvp.partnerName || '—'}
+                          </td>
+                          <td
+                            className="py-3 px-4 text-xl"
+                            style={{ ...cellStyle, color: '#8a8a7a' }}
+                          >
+                            {formatDate(rsvp.createdAt)}
+                          </td>
+                          <td className="py-3 px-4 whitespace-nowrap">
+                            <button
+                              className="text-lg mr-3 uppercase tracking-wider font-semibold hover:opacity-70 disabled:opacity-50"
+                              style={{ ...cellStyle, color: '#6b6b5e' }}
+                              onClick={() => startEdit(rsvp)}
+                              disabled={isSaving}
+                            >
+                              Ред.
+                            </button>
+                            <button
+                              className="text-lg uppercase tracking-wider font-semibold hover:opacity-70 disabled:opacity-50"
+                              style={{ ...cellStyle, color: '#b45454' }}
+                              onClick={() => handleDelete(rsvp.id)}
+                              disabled={isSaving}
+                            >
+                              Удалить
+                            </button>
+                          </td>
+                        </>
+                      )}
                     </tr>
                   ))}
                 </tbody>
