@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 interface InlineMusicPlayerProps {
@@ -11,6 +11,17 @@ export function InlineMusicPlayer({ src }: InlineMusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const { locale, t } = useLanguage();
+
+  useEffect(() => {
+    if (audioRef.current) {
+      const wasPlaying = isPlaying;
+      audioRef.current.src = src;
+      audioRef.current.load();
+      if (wasPlaying) {
+        audioRef.current.play();
+      }
+    }
+  }, [src]);
 
   const togglePlay = () => {
     if (audioRef.current) {

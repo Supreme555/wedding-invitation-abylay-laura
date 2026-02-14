@@ -28,18 +28,6 @@ export function Hero() {
         <div className="flex justify-end pt-3 pr-1">
           <div className="flex gap-1">
             <button
-              onClick={() => setLocale('ru')}
-              className="px-3 py-1 text-sm uppercase tracking-wider font-semibold transition-opacity"
-              style={{
-                fontFamily: 'var(--font-cormorant)',
-                color: locale === 'ru' ? '#fef9db' : '#6b6b5e',
-                backgroundColor: locale === 'ru' ? '#6b6b5e' : 'rgba(255,255,255,0.4)',
-                borderRadius: '2px',
-              }}
-            >
-              РУС
-            </button>
-            <button
               onClick={() => setLocale('kz')}
               className="px-3 py-1 text-sm uppercase tracking-wider font-semibold transition-opacity"
               style={{
@@ -50,6 +38,18 @@ export function Hero() {
               }}
             >
               ҚАЗ
+            </button>
+            <button
+              onClick={() => setLocale('ru')}
+              className="px-3 py-1 text-sm uppercase tracking-wider font-semibold transition-opacity"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                color: locale === 'ru' ? '#fef9db' : '#6b6b5e',
+                backgroundColor: locale === 'ru' ? '#6b6b5e' : 'rgba(255,255,255,0.4)',
+                borderRadius: '2px',
+              }}
+            >
+              РУС
             </button>
           </div>
         </div>
@@ -125,7 +125,7 @@ export function Hero() {
 
       {/* Музыкальный плеер */}
       <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-10">
-        <InlineMusicPlayer src="/audio/Midnite String Quartet - Young and Beautiful.mp3" />
+        <InlineMusicPlayer src={locale === 'kz' ? '/audio/kaz-music.mp3' : '/audio/ru-music.mp3'} />
       </div>
 
       {/* Индикатор скролла */}
