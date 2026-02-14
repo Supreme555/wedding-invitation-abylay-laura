@@ -1,8 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export function DressCodeSection() {
+  const { locale, t } = useLanguage();
+
   return (
     <section
       className="min-h-screen flex items-center justify-center bg-[#fef9db]"
@@ -10,30 +13,25 @@ export function DressCodeSection() {
     >
       <div className="container mx-auto px-6 max-w-md">
         <div className="flex flex-col items-center">
-          {/* Заголовок */}
           <h2
             className="text-4xl md:text-5xl italic"
             style={{ fontFamily: 'var(--font-great-vibes)', color: '#4a4a3e' }}
           >
-            Дресс-код
+            {t.dressCode.title[locale]}
           </h2>
 
-          {/* Описание */}
           <p
             className="mt-6 text-lg md:text-xl leading-relaxed italic text-center"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
           >
-            Нам будет приятно,
-            <br />
-            если вы поддержите стилистику
-            <br />
-            нашей свадьбы и используете в ваших
-            <br />
-            нарядах предложенные цвета:
+            {t.dressCode.message[locale].split('\n').map((line, i) => (
+              <span key={i}>
+                {i > 0 && <br />}
+                {line}
+              </span>
+            ))}
           </p>
 
-
-          {/* Фото девушек */}
           <Image
             src="/images/dress-code/girls.png"
             alt="Женский дресс-код"
@@ -42,7 +40,6 @@ export function DressCodeSection() {
             className="mt-8 w-full max-w-sm object-contain"
           />
 
-          {/* Фото мужчин */}
           <Image
             src="/images/dress-code/mans.png"
             alt="Мужской дресс-код"

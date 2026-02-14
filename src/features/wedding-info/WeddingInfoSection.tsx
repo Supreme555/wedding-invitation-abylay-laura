@@ -2,15 +2,9 @@
 
 import { useMemo } from 'react';
 import { WEDDING_INFO, VENUE_LINK } from '@/constants/wedding';
+import { useLanguage } from '@/i18n/LanguageContext';
 
-
-const DAYS_OF_WEEK = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
-const MONTH_NAMES = [
-  'ЯНВАРЬ', 'ФЕВРАЛЬ', 'МАРТ', 'АПРЕЛЬ', 'МАЙ', 'ИЮНЬ',
-  'ИЮЛЬ', 'АВГУСТ', 'СЕНТЯБРЬ', 'ОКТЯБРЬ', 'НОЯБРЬ', 'ДЕКАБРЬ',
-];
-
-function buildCalendar(date: Date) {
+function buildCalendar(date: Date, daysOfWeek: string[], monthNames: string[]) {
   const year = date.getFullYear();
   const month = date.getMonth();
   const highlightDay = date.getDate();
@@ -34,11 +28,20 @@ function buildCalendar(date: Date) {
     weeks.push(week);
   }
 
-  return { weeks, highlightDay, monthName: MONTH_NAMES[month], year };
+  return { weeks, highlightDay, monthName: monthNames[month], year, daysOfWeek };
 }
 
 export function WeddingInfoSection() {
-  const calendar = useMemo(() => buildCalendar(WEDDING_INFO.weddingDate), []);
+  const { locale, t } = useLanguage();
+
+  const calendar = useMemo(
+    () => buildCalendar(
+      WEDDING_INFO.weddingDate,
+      t.weddingInfo.daysOfWeek[locale],
+      t.weddingInfo.months[locale],
+    ),
+    [locale, t],
+  );
 
   return (
     <section
@@ -47,31 +50,26 @@ export function WeddingInfoSection() {
     >
       <div className="container mx-auto px-6 max-w-md">
         <div className="flex flex-col items-center">
-          {/* Заголовок */}
           <h2
             className="text-3xl md:text-4xl font-bold italic"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
           >
-            ДОРОГИЕ ГОСТИ!
+            {t.weddingInfo.title[locale]}
           </h2>
 
-          {/* Приглашение */}
           <p
             className="mt-5 text-lg md:text-xl leading-relaxed italic text-center"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
           >
-            От всей души хотим пригласить вас
-            <br />
-            на наше свадебное торжество. Очень
-            <br />
-            надеемся провести этот радостный
-            <br />
-            день вместе с вами!
+            {t.weddingInfo.message[locale].split('\n').map((line, i) => (
+              <span key={i}>
+                {i > 0 && <br />}
+                {line}
+              </span>
+            ))}
           </p>
 
-          {/* Календарь */}
           <div className="mt-8 w-full" style={{ maxWidth: '320px' }}>
-            {/* Месяц и год */}
             <div className="flex justify-between items-center mb-4 px-1">
               <span
                 className="text-lg font-bold tracking-wider"
@@ -87,9 +85,8 @@ export function WeddingInfoSection() {
               </span>
             </div>
 
-            {/* Дни недели */}
             <div className="grid grid-cols-7 mb-1">
-              {DAYS_OF_WEEK.map((day) => (
+              {calendar.daysOfWeek.map((day) => (
                 <div
                   key={day}
                   className="text-center text-sm font-semibold py-1"
@@ -100,7 +97,6 @@ export function WeddingInfoSection() {
               ))}
             </div>
 
-            {/* Числа */}
             {calendar.weeks.map((week, wi) => (
               <div key={wi} className="grid grid-cols-7">
                 {week.map((day, di) => (
@@ -144,12 +140,11 @@ export function WeddingInfoSection() {
             ))}
           </div>
 
-          {/* Время */}
           <p
             className="mt-8 text-base uppercase tracking-wider"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
           >
-            Начало в
+            {t.weddingInfo.startAt[locale]}
           </p>
           <p
             className="mt-1 text-4xl md:text-5xl font-bold"
@@ -158,12 +153,11 @@ export function WeddingInfoSection() {
             {WEDDING_INFO.time}
           </p>
 
-          {/* Локация */}
           <h3
             className="mt-10 text-3xl md:text-4xl font-bold italic"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
           >
-            ЛОКАЦИЯ
+            {t.weddingInfo.location[locale]}
           </h3>
           <p
             className="mt-3 text-lg italic text-center"
@@ -178,7 +172,6 @@ export function WeddingInfoSection() {
             {WEDDING_INFO.venue.address}
           </p>
 
-          {/* Кнопка карты */}
           <a
             href={VENUE_LINK}
             target="_blank"
@@ -191,7 +184,7 @@ export function WeddingInfoSection() {
               border: '2px solid #8a8a7a',
             }}
           >
-            ПОСМОТРЕТЬ НА КАРТЕ
+            {t.weddingInfo.viewOnMap[locale]}
           </a>
 
         </div>

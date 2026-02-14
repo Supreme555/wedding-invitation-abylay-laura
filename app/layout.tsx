@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Great_Vibes, Inter } from "next/font/google";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -43,7 +44,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${cormorant.variable} ${greatVibes.variable} font-sans antialiased`}
       >
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

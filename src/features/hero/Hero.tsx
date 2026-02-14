@@ -1,8 +1,11 @@
 'use client';
 
 import { InlineMusicPlayer } from '@/components/ui/InlineMusicPlayer';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export function Hero() {
+  const { locale, setLocale, t } = useLanguage();
+
   return (
     <section
       id="home"
@@ -19,6 +22,34 @@ export function Hero() {
         }}
       />
 
+      {/* Переключатель языка */}
+      <div className="absolute top-4 right-4 z-20 flex gap-1">
+        <button
+          onClick={() => setLocale('ru')}
+          className="px-3 py-1 text-sm uppercase tracking-wider font-semibold transition-opacity"
+          style={{
+            fontFamily: 'var(--font-cormorant)',
+            color: locale === 'ru' ? '#fef9db' : '#6b6b5e',
+            backgroundColor: locale === 'ru' ? '#6b6b5e' : 'rgba(255,255,255,0.4)',
+            borderRadius: '2px',
+          }}
+        >
+          РУС
+        </button>
+        <button
+          onClick={() => setLocale('kz')}
+          className="px-3 py-1 text-sm uppercase tracking-wider font-semibold transition-opacity"
+          style={{
+            fontFamily: 'var(--font-cormorant)',
+            color: locale === 'kz' ? '#fef9db' : '#6b6b5e',
+            backgroundColor: locale === 'kz' ? '#6b6b5e' : 'rgba(255,255,255,0.4)',
+            borderRadius: '2px',
+          }}
+        >
+          ҚАЗ
+        </button>
+      </div>
+
       {/* Контент */}
       <div className="relative z-10 container mx-auto px-4">
         <div
@@ -33,7 +64,7 @@ export function Hero() {
               className="text-sm md:text-base uppercase tracking-[3px] md:tracking-[4px]"
               style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
             >
-              ВМЕСТЕ С СЕМЬЯМИ
+              {t.hero.withFamilies[locale]}
             </p>
           </div>
 
@@ -45,7 +76,7 @@ export function Hero() {
               className="text-[48px] leading-tight sm:text-[56px] md:text-[68px] lg:text-[78px]"
               style={{ fontFamily: 'var(--font-great-vibes)', color: '#4a4a3e' }}
             >
-              Абылай
+              {t.hero.groomName[locale]}
             </h1>
 
             <p
@@ -59,7 +90,7 @@ export function Hero() {
               className="text-[48px] leading-tight sm:text-[56px] md:text-[68px] lg:text-[78px]"
               style={{ fontFamily: 'var(--font-great-vibes)', color: '#4a4a3e' }}
             >
-              Лаура
+              {t.hero.brideName[locale]}
             </h1>
           </div>
 
@@ -71,9 +102,12 @@ export function Hero() {
               className="text-base md:text-lg italic"
               style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
             >
-              просят вас разделить
-              <br />
-              радость их бракосочетания
+              {t.hero.invitation[locale].split('\n').map((line, i) => (
+                <span key={i}>
+                  {i > 0 && <br />}
+                  {line}
+                </span>
+              ))}
             </p>
           </div>
         </div>

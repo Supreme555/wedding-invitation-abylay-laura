@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 interface InlineMusicPlayerProps {
   src: string;
@@ -9,6 +10,7 @@ interface InlineMusicPlayerProps {
 export function InlineMusicPlayer({ src }: InlineMusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const { locale, t } = useLanguage();
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -52,7 +54,7 @@ export function InlineMusicPlayer({ src }: InlineMusicPlayerProps) {
           className="text-sm font-medium"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
         >
-          {isPlaying ? 'Играет музыка' : 'Включить музыку'}
+          {isPlaying ? t.hero.musicPlaying[locale] : t.hero.playMusic[locale]}
         </span>
       </div>
 

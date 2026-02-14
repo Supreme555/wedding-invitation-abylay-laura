@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import axios from 'axios';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -16,6 +17,7 @@ export function RSVPForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { locale, t } = useLanguage();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ export function RSVPForm() {
       await axios.post(`${API_URL}/rsvp`, formData);
       setSubmitted(true);
     } catch {
-      setError('Не удалось отправить. Попробуйте ещё раз.');
+      setError(t.rsvp.errorSend[locale]);
     } finally {
       setIsSubmitting(false);
     }
@@ -47,15 +49,18 @@ export function RSVPForm() {
           className="text-2xl font-bold italic"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
         >
-          Спасибо!
+          {t.rsvp.thanks[locale]}
         </h3>
         <p
           className="mt-2 text-base italic"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
         >
-          Мы получили ваш ответ.
-          <br />
-          С нетерпением ждем встречи!
+          {t.rsvp.received[locale].split('\n').map((line, i) => (
+            <span key={i}>
+              {i > 0 && <br />}
+              {line}
+            </span>
+          ))}
         </p>
       </div>
     );
@@ -70,7 +75,7 @@ export function RSVPForm() {
           className="block text-sm font-medium mb-2"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
         >
-          Имя и Фамилия
+          {t.rsvp.nameLabel[locale]}
         </label>
         <input
           type="text"
@@ -83,7 +88,7 @@ export function RSVPForm() {
             backgroundColor: 'transparent',
             borderBottom: '1px solid #c5c0b0',
           }}
-          placeholder="Введите ваше имя и фамилию"
+          placeholder={t.rsvp.namePlaceholder[locale]}
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
@@ -95,7 +100,7 @@ export function RSVPForm() {
           className="block text-sm font-medium mb-3"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
         >
-          Вы придете?
+          {t.rsvp.attendLabel[locale]}
         </label>
         <div className="flex gap-4">
           <button
@@ -109,7 +114,7 @@ export function RSVPForm() {
               border: '1px solid #c5c0b0',
             }}
           >
-            Да, с радостью!
+            {t.rsvp.attendYes[locale]}
           </button>
           <button
             type="button"
@@ -122,7 +127,7 @@ export function RSVPForm() {
               border: '1px solid #c5c0b0',
             }}
           >
-            К сожалению, нет
+            {t.rsvp.attendNo[locale]}
           </button>
         </div>
       </div>
@@ -134,7 +139,7 @@ export function RSVPForm() {
             className="block text-sm font-medium mb-3"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
           >
-            Приду с парой
+            {t.rsvp.withPartner[locale]}
           </label>
           <div className="flex gap-4">
             <button
@@ -148,7 +153,7 @@ export function RSVPForm() {
                 border: '1px solid #c5c0b0',
               }}
             >
-              Да
+              {t.rsvp.yes[locale]}
             </button>
             <button
               type="button"
@@ -161,7 +166,7 @@ export function RSVPForm() {
                 border: '1px solid #c5c0b0',
               }}
             >
-              Нет
+              {t.rsvp.no[locale]}
             </button>
           </div>
 
@@ -176,7 +181,7 @@ export function RSVPForm() {
                 backgroundColor: 'transparent',
                 borderBottom: '1px solid #c5c0b0',
               }}
-              placeholder="Имя и фамилия партнёра"
+              placeholder={t.rsvp.partnerPlaceholder[locale]}
               value={formData.partnerName}
               onChange={(e) => setFormData({ ...formData, partnerName: e.target.value })}
             />
@@ -205,7 +210,7 @@ export function RSVPForm() {
           border: '2px solid #8a8a7a',
         }}
       >
-        {isSubmitting ? 'Отправка...' : 'ОТПРАВИТЬ'}
+        {isSubmitting ? t.rsvp.submitting[locale] : t.rsvp.submit[locale]}
       </button>
     </form>
   );
