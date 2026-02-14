@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { WEDDING_INFO, VENUE_LINK } from '@/constants/wedding';
 import { useLanguage } from '@/i18n/LanguageContext';
 
-function buildCalendar(date: Date, daysOfWeek: string[], monthNames: string[]) {
+function buildCalendar(date: Date, daysOfWeek: readonly string[], monthNames: readonly string[]) {
   const year = date.getFullYear();
   const month = date.getMonth();
   const highlightDay = date.getDate();

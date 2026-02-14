@@ -113,6 +113,14 @@ export function Hero() {
         </div>
       </div>
 
+      {/* Градиентный переход к следующей секции */}
+      <div
+        className="absolute bottom-0 left-0 right-0 z-1 h-40 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, #fef9db 100%)',
+        }}
+      />
+
       {/* Музыкальный плеер */}
       <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-10">
         <InlineMusicPlayer src="/audio/Midnite String Quartet - Young and Beautiful.mp3" />
