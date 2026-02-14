@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 interface InlineMusicPlayerProps {
   src: string;
@@ -23,14 +23,18 @@ export function InlineMusicPlayer({ src }: InlineMusicPlayerProps) {
 
   return (
     <div className="flex items-center justify-center gap-3 py-4">
-      <div className="flex items-center gap-3 px-6 py-3 bg-rose-50 rounded-full">
-        <svg className="w-5 h-5 text-rose-600" fill="currentColor" viewBox="0 0 24 24">
+      <div
+        className="flex items-center gap-3 px-6 py-3 rounded-full"
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}
+      >
+        <svg className="w-5 h-5" style={{ color: '#6b6b5e' }} fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
         </svg>
 
         <button
           onClick={togglePlay}
-          className="w-10 h-10 rounded-full bg-rose-600 hover:bg-rose-700 transition-colors flex items-center justify-center text-white"
+          className="w-10 h-10 rounded-full transition-colors flex items-center justify-center"
+          style={{ backgroundColor: '#6b6b5e', color: '#fef9db' }}
           aria-label={isPlaying ? 'Пауза' : 'Воспроизвести'}
         >
           {isPlaying ? (
