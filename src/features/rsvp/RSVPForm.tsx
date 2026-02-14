@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import axios from 'axios';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export function RSVPForm() {
   const [formData, setFormData] = useState({
@@ -10,18 +13,21 @@ export function RSVPForm() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
-    // TODO: Реализовать отправку формы на сервер
-    console.log('RSVP Data:', formData);
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    setIsSubmitting(false);
-    setSubmitted(true);
+    try {
+      await axios.post(`${API_URL}/rsvp`, formData);
+      setSubmitted(true);
+    } catch {
+      setError('Не удалось отправить. Попробуйте ещё раз.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -118,6 +124,15 @@ export function RSVPForm() {
           </button>
         </div>
       </div>
+
+      {error && (
+        <p
+          className="text-sm text-center"
+          style={{ fontFamily: 'var(--font-cormorant)', color: '#b45454' }}
+        >
+          {error}
+        </p>
+      )}
 
       {/* Кнопка отправки */}
       <button
