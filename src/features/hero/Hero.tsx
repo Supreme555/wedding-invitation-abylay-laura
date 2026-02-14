@@ -82,7 +82,7 @@ export function Hero() {
 
       {/* Музыкальный плеер */}
       <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-10">
-        <InlineMusicPlayer src="/audio/wedding-music.mp3" />
+        <InlineMusicPlayer src="/audio/Midnite String Quartet - Young and Beautiful.mp3" />
       </div>
 
       {/* Индикатор скролла */}
