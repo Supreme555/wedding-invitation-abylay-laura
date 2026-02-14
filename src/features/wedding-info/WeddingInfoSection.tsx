@@ -6,14 +6,14 @@ import { InlineMusicPlayer } from '@/components/ui/InlineMusicPlayer';
 export function WeddingInfoSection() {
   return (
     <section
-      className="min-h-screen flex items-center justify-center py-16 bg-[#fef9db]"
-      style={{ scrollSnapAlign: 'start' }}
+      className="min-h-screen flex items-start justify-center pb-16 bg-[#fef9db]"
+      style={{ scrollSnapAlign: 'start', paddingTop: '8rem' }}
     >
       <div className="container mx-auto px-4 max-w-2xl">
         <div className="text-center space-y-12">
           {/* Дата */}
-          <div className="space-y-4">
-            <div className="w-16 h-16 mx-auto bg-rose-100 rounded-full flex items-center justify-center">
+          <div className="space-y-4 flex flex-col items-center">
+            <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center">
               <svg
                 className="w-8 h-8 text-rose-600"
                 fill="none"
@@ -49,8 +49,8 @@ export function WeddingInfoSection() {
           </div>
 
           {/* Время */}
-          <div className="space-y-4">
-            <div className="w-16 h-16 mx-auto bg-rose-100 rounded-full flex items-center justify-center">
+          <div className="space-y-4 flex flex-col items-center">
+            <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center">
               <svg
                 className="w-8 h-8 text-rose-600"
                 fill="none"
@@ -82,8 +82,8 @@ export function WeddingInfoSection() {
           </div>
 
           {/* Место */}
-          <div className="space-y-4">
-            <div className="w-16 h-16 mx-auto bg-rose-100 rounded-full flex items-center justify-center">
+          <div className="space-y-4 flex flex-col items-center">
+            <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center">
               <svg
                 className="w-8 h-8 text-rose-600"
                 fill="none"
