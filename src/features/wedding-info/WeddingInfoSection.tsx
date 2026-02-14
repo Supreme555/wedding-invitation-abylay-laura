@@ -1,138 +1,187 @@
 'use client';
 
+import { useMemo } from 'react';
 import { WEDDING_INFO, VENUE_LINK } from '@/constants/wedding';
 import { InlineMusicPlayer } from '@/components/ui/InlineMusicPlayer';
 
+const DAYS_OF_WEEK = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
+const MONTH_NAMES = [
+  'ЯНВАРЬ', 'ФЕВРАЛЬ', 'МАРТ', 'АПРЕЛЬ', 'МАЙ', 'ИЮНЬ',
+  'ИЮЛЬ', 'АВГУСТ', 'СЕНТЯБРЬ', 'ОКТЯБРЬ', 'НОЯБРЬ', 'ДЕКАБРЬ',
+];
+
+function buildCalendar(date: Date) {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const highlightDay = date.getDate();
+
+  const firstDay = new Date(year, month, 1);
+  const startOffset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const weeks: (number | null)[][] = [];
+  let week: (number | null)[] = Array(startOffset).fill(null);
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    week.push(d);
+    if (week.length === 7) {
+      weeks.push(week);
+      week = [];
+    }
+  }
+  if (week.length > 0) {
+    while (week.length < 7) week.push(null);
+    weeks.push(week);
+  }
+
+  return { weeks, highlightDay, monthName: MONTH_NAMES[month], year };
+}
+
 export function WeddingInfoSection() {
+  const calendar = useMemo(() => buildCalendar(WEDDING_INFO.weddingDate), []);
+
   return (
     <section
-      className="min-h-screen flex items-start justify-center pb-16 bg-[#fef9db]"
-      style={{ scrollSnapAlign: 'start', paddingTop: '8rem' }}
+      className="min-h-screen flex items-center justify-center py-12 bg-[#fef9db]"
+      style={{ scrollSnapAlign: 'start' }}
     >
-      <div className="container mx-auto px-4 max-w-2xl">
-        <div className="text-center space-y-12">
-          {/* Дата */}
-          <div className="space-y-4 flex flex-col items-center">
-            <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center">
-              <svg
-                className="w-8 h-8 text-rose-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-            </div>
-            <div>
-              <p
-                className="text-sm uppercase tracking-wider mb-2"
-                style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
-              >
-                Дата
-              </p>
-              <p
-                className="text-3xl md:text-4xl font-bold"
+      <div className="container mx-auto px-6 max-w-md">
+        <div className="flex flex-col items-center">
+          {/* Заголовок */}
+          <h2
+            className="text-3xl md:text-4xl font-bold italic"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
+          >
+            ДОРОГИЕ ГОСТИ!
+          </h2>
+
+          {/* Приглашение */}
+          <p
+            className="mt-6 text-lg md:text-xl leading-relaxed italic text-center"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
+          >
+            От всей души хотим пригласить вас
+            <br />
+            на наше свадебное торжество. Очень
+            <br />
+            надеемся провести этот радостный
+            <br />
+            день вместе с вами!
+          </p>
+
+          {/* Календарь */}
+          <div className="mt-10 w-full" style={{ maxWidth: '320px' }}>
+            {/* Месяц и год */}
+            <div className="flex justify-between items-center mb-4 px-1">
+              <span
+                className="text-lg font-bold tracking-wider"
                 style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
               >
-                {new Intl.DateTimeFormat('ru-RU', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                }).format(WEDDING_INFO.weddingDate)}
-              </p>
-            </div>
-          </div>
-
-          {/* Время */}
-          <div className="space-y-4 flex flex-col items-center">
-            <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center">
-              <svg
-                className="w-8 h-8 text-rose-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <div>
-              <p
-                className="text-sm uppercase tracking-wider mb-2"
-                style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
-              >
-                Время
-              </p>
-              <p
-                className="text-3xl md:text-4xl font-bold"
+                {calendar.monthName}
+              </span>
+              <span
+                className="text-lg font-bold"
                 style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
               >
-                {WEDDING_INFO.time}
-              </p>
+                {calendar.year}
+              </span>
             </div>
+
+            {/* Дни недели */}
+            <div className="grid grid-cols-7 mb-1">
+              {DAYS_OF_WEEK.map((day) => (
+                <div
+                  key={day}
+                  className="text-center text-sm font-semibold py-1"
+                  style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
+                >
+                  {day}
+                </div>
+              ))}
+            </div>
+
+            {/* Числа */}
+            {calendar.weeks.map((week, wi) => (
+              <div key={wi} className="grid grid-cols-7">
+                {week.map((day, di) => (
+                  <div
+                    key={di}
+                    className="flex items-center justify-center py-2"
+                  >
+                    {day !== null && (
+                      day === calendar.highlightDay ? (
+                        <div className="relative flex items-center justify-center w-9 h-9">
+                          <svg
+                            className="absolute inset-0"
+                            width="36"
+                            height="36"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#8a8a7a"
+                            strokeWidth="1.5"
+                          >
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                          </svg>
+                          <span
+                            className="relative text-base font-bold"
+                            style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
+                          >
+                            {day}
+                          </span>
+                        </div>
+                      ) : (
+                        <span
+                          className="text-base"
+                          style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
+                        >
+                          {day}
+                        </span>
+                      )
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
 
-          {/* Место */}
-          <div className="space-y-4 flex flex-col items-center">
-            <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center">
-              <svg
-                className="w-8 h-8 text-rose-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            </div>
-            <div>
-              <p
-                className="text-sm uppercase tracking-wider mb-2"
-                style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
-              >
-                Место
-              </p>
-              <a
-                href={VENUE_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xl md:text-2xl font-medium text-rose-600 hover:text-rose-700 transition-colors"
-                style={{ fontFamily: 'var(--font-cormorant)' }}
-              >
-                Открыть карту
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div>
+          {/* Локация */}
+          <h3
+            className="mt-12 text-3xl md:text-4xl font-bold italic"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
+          >
+            ЛОКАЦИЯ
+          </h3>
+          <p
+            className="mt-4 text-lg italic text-center"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
+          >
+            {WEDDING_INFO.venue.name}
+          </p>
+          <p
+            className="mt-1 text-lg italic text-center"
+            style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
+          >
+            {WEDDING_INFO.venue.address}
+          </p>
+
+          {/* Кнопка карты */}
+          <a
+            href={VENUE_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-block px-8 py-3 text-base uppercase tracking-widest font-semibold transition-opacity hover:opacity-80"
+            style={{
+              fontFamily: 'var(--font-cormorant)',
+              color: '#fef9db',
+              backgroundColor: '#6b6b5e',
+              border: '2px solid #8a8a7a',
+            }}
+          >
+            ПОСМОТРЕТЬ НА КАРТЕ
+          </a>
 
           {/* Музыкальный плеер */}
-          <div className="pt-8">
+          <div className="mt-8">
             <InlineMusicPlayer src="/audio/wedding-music.mp3" />
           </div>
         </div>

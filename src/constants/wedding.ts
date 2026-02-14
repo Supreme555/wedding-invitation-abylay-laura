@@ -5,8 +5,8 @@ export const WEDDING_INFO: WeddingInfo = {
   groomName: 'Abylay',
   weddingDate: new Date('2026-07-18T14:00:00'),
   venue: {
-    name: 'Место проведения',
-    address: 'Адрес будет уточнен',
+    name: 'Жайлау Гольф-курорт',
+    address: 'Микрорайон Мирас, 188',
     coordinates: {
       lat: 0,
       lng: 0,
