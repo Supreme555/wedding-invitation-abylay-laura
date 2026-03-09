@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wedding-invitation
+  labels:
+    app.kubernetes.io/name: wedding-invitation
+    app.kubernetes.io/managed-by: kubectl

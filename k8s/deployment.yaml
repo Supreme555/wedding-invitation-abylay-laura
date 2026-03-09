@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wedding-invitation-frontend
+  namespace: wedding-invitation
+  labels:
+    app: wedding-invitation-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wedding-invitation-frontend
+  template:
+    metadata:
+      labels:
+        app: wedding-invitation-frontend
+    spec:
+      containers:
+        - name: wedding-invitation-frontend
+          image: registry.welt-on.com/wedding-invitation-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4006
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "4006"
+            - name: HOSTNAME
+              value: "0.0.0.0"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 4006
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 3
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 4006
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+      imagePullSecrets:
+        - name: registry-secret
