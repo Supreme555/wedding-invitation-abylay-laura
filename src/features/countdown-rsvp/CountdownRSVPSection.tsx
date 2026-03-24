@@ -23,7 +23,7 @@ export function CountdownRSVPSection() {
       style={{ paddingBottom: '2rem' }}
     >
       <Image
-        src="/images/CountdownRSVPSection/white-girl.jpg"
+        src="/images/CountdownRSVPSection/white-girl.JPG"
         alt=""
         width={800}
         height={500}
