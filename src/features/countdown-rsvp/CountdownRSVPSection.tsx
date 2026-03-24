@@ -23,7 +23,7 @@ export function CountdownRSVPSection() {
       style={{ paddingBottom: '2rem' }}
     >
       <Image
-        src="/images/CountdownRSVPSection/white-girl.png"
+        src="/images/CountdownRSVPSection/white-girl.jpg"
         alt=""
         width={800}
         height={500}
@@ -68,13 +68,13 @@ export function CountdownRSVPSection() {
           )}
 
           <h2
-            className="mt-10 text-3xl md:text-4xl font-bold italic text-center"
+            className="mt-10 text-4xl md:text-5xl font-bold italic text-center"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
           >
             {t.rsvp.title[locale]}
           </h2>
           <p
-            className="mt-3 text-lg italic text-center"
+            className="mt-3 text-xl font-bold italic text-center"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
           >
             {t.rsvp.subtitle[locale].split('\n').map((line, i) => (

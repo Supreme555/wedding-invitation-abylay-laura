@@ -46,13 +46,13 @@ export function RSVPForm() {
           </svg>
         </div>
         <h3
-          className="text-2xl font-bold italic"
+          className="text-3xl font-bold italic"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#4a4a3e' }}
         >
           {t.rsvp.thanks[locale]}
         </h3>
         <p
-          className="mt-2 text-base italic"
+          className="mt-2 text-lg italic"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#8a8a7a' }}
         >
           {t.rsvp.received[locale].split('\n').map((line, i) => (
@@ -72,7 +72,7 @@ export function RSVPForm() {
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-medium mb-2"
+          className="block text-base font-bold mb-2"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
         >
           {t.rsvp.nameLabel[locale]}
@@ -97,7 +97,7 @@ export function RSVPForm() {
       {/* Присутствие */}
       <div>
         <label
-          className="block text-sm font-medium mb-3"
+          className="block text-base font-bold mb-3"
           style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
         >
           {t.rsvp.attendLabel[locale]}
@@ -106,7 +106,7 @@ export function RSVPForm() {
           <button
             type="button"
             onClick={() => setFormData({ ...formData, attending: true })}
-            className="flex-1 py-3 text-base font-medium transition-colors"
+            className="flex-1 py-3 text-lg font-bold transition-colors"
             style={{
               fontFamily: 'var(--font-cormorant)',
               color: formData.attending ? '#fef9db' : '#6b6b5e',
@@ -119,7 +119,7 @@ export function RSVPForm() {
           <button
             type="button"
             onClick={() => setFormData({ ...formData, attending: false, withPartner: false, partnerName: '' })}
-            className="flex-1 py-3 text-base font-medium transition-colors"
+            className="flex-1 py-3 text-lg font-bold transition-colors"
             style={{
               fontFamily: 'var(--font-cormorant)',
               color: !formData.attending ? '#fef9db' : '#6b6b5e',
@@ -136,7 +136,7 @@ export function RSVPForm() {
       {formData.attending && (
         <div>
           <label
-            className="block text-sm font-medium mb-3"
+            className="block text-base font-bold mb-3"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#6b6b5e' }}
           >
             {t.rsvp.withPartner[locale]}
@@ -145,7 +145,7 @@ export function RSVPForm() {
             <button
               type="button"
               onClick={() => setFormData({ ...formData, withPartner: true })}
-              className="flex-1 py-3 text-base font-medium transition-colors"
+              className="flex-1 py-3 text-lg font-bold transition-colors"
               style={{
                 fontFamily: 'var(--font-cormorant)',
                 color: formData.withPartner ? '#fef9db' : '#6b6b5e',
@@ -158,7 +158,7 @@ export function RSVPForm() {
             <button
               type="button"
               onClick={() => setFormData({ ...formData, withPartner: false, partnerName: '' })}
-              className="flex-1 py-3 text-base font-medium transition-colors"
+              className="flex-1 py-3 text-lg font-bold transition-colors"
               style={{
                 fontFamily: 'var(--font-cormorant)',
                 color: !formData.withPartner ? '#fef9db' : '#6b6b5e',
@@ -202,7 +202,7 @@ export function RSVPForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-3 text-base uppercase tracking-widest font-semibold transition-opacity hover:opacity-80 disabled:opacity-50"
+        className="w-full py-3 text-lg uppercase tracking-widest font-bold transition-opacity hover:opacity-80 disabled:opacity-50"
         style={{
           fontFamily: 'var(--font-cormorant)',
           color: '#fef9db',
